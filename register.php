@@ -23,12 +23,6 @@ $REGISTER_LTI2 = array(
         "link_selection", "migration_selection", "resource_selection",
         "tool_configuration", "user_navigation"
         */
-    ),
-    "screen_shots" => array(
-        "store/screen-01.png",
-        "store/screen-02.png",
-        "store/screen-03.png",
-        "store/screen-analytics.png"
     )
 
 );
