@@ -20,24 +20,30 @@ if ( $LAUNCH->link && $LAUNCH->link->id && SettingsForm::handleSettingsPost() ) 
 // Handle Post Data
 $p = $CFG->dbprefix;
 
+$menu = false;
+if ( $LAUNCH->user->instructor ) {
+    $menu = new \Tsugi\UI\MenuSet();
+    if ( $CFG->launchactivity ) {
+        $menu->addRight(__('Analytics'), 'analytics');
+    }
+    $menu->addRight(__('Settings'), '#', /* push */ false, SettingsForm::attr());
+}
+
+
 // Render view
 $OUTPUT->header();
 $OUTPUT->bodyStart();
-$OUTPUT->topNav();
+$OUTPUT->topNav($menu);
+$OUTPUT->flashMessages();
+
 $OUTPUT->welcomeUserCourse();
+
 if ( $LAUNCH->link && $LAUNCH->user && $LAUNCH->user->instructor ) {
-    echo "<p style='text-align:right;'>";
-    if ( $CFG->launchactivity ) {
-         echo('<a href="analytics" class="btn btn-default">Launches</a> ');
-    }
-    SettingsForm::button(false);
-    echo("</p>");
     SettingsForm::start();
     SettingsForm::text('color','A color for breakout.');
     SettingsForm::end();
 }
 
-$OUTPUT->flashMessages();
 $color = Settings::linkGet('color', 'black');
 echo('<script> breakout_color = "'.$color.'";</script>');
 ?>
